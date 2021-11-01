@@ -14,3 +14,12 @@ socket.addEventListener("message",(message) => {
 socket.addEventListener("close", () => {
     console.log("Disconnected from Server ❗");
 });
+
+function handleSubmit(event){
+    event.preventDefault();
+    const input = messageForm.querySelector("input");
+    socket.send(input.value);
+    input.value = "";
+}
+
+messageForm.addEventListener("submit", handleSubmit);

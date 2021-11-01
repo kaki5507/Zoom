@@ -20,3 +20,19 @@ function handleConnection(socket){
     console.log(socket);
 }
 
+const sockets = [];
+
+function onSocketClose() {
+    console.log("Disconnected from the Browser ❌");
+}
+
+wss.on("connection", (socket) => {
+    sockets.push(socket);
+    socket.on("close", onSocketClose);
+    socket.on("message", (message) => {
+        const messageString = message.toString('utf8');
+        sockets.forEach((aSocket) => aSocket.send(messageString));
+    });
+});
+
+server.listen(3000, handleListen);
